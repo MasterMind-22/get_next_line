@@ -1,7 +1,8 @@
 #include "get_next_line.h"
-int ft_strlen(char *s)
+
+size_t ft_strlen(char *s)
 {
-	int i;
+	size_t	i;
 
 	i = 0;
 	if (*s)
@@ -19,10 +20,7 @@ int newline_found(char *read_line)
 	while (read_line[i])
 	{
 		if (read_line[i] == '\n')
-		{
-			return (1);
-			break;
-		}
+			return (i);
 		i++;
 	}
 	return (0);
@@ -49,20 +47,24 @@ char *ft_strjoin(char *s1, char *s2)
 	return (sum);
 }
 
-
-char *ft_strdup(char *str)
+char	*ft_strdup(char *s1)
 {
-	int i;
-	char *copy;
+	int		i;
+	char	*copy;
+	size_t	len;
 
-	i = -1;
-	if (!str)
-		return (NULL);
-	copy = malloc((ft_strlen(str) + 1) * sizeof(char));
+	i = 0;
+	if (!s1)
+		return(NULL);
+	len = ft_strlen(s1);
+	copy = malloc(len + 1);
 	if (!copy)
 		return (NULL);
-	while (str[++i])
-		copy[i] = str[i];
+	while (s1[i] != '\0')
+	{
+		copy[i] = s1[i];
+		i++;
+	}
 	copy[i] = '\0';
 	return (copy);
 }
