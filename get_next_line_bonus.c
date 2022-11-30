@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yonadry <yonadry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/28 18:44:11 by yonadry           #+#    #+#             */
-/*   Updated: 2022/11/30 15:37:38 by yonadry          ###   ########.fr       */
+/*   Created: 2022/11/30 14:05:18 by yonadry           #+#    #+#             */
+/*   Updated: 2022/11/30 15:44:21 by yonadry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*read_fd(int fd, char *read_line)
 {
@@ -99,35 +99,14 @@ char	*save_line_f(char *read_line)
 char	*get_next_line(int fd)
 {
 	char		*return_line;
-	static char	*read_line;
+	static char	*read_line[10240];
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	read_line = read_fd(fd, read_line);
-	if (!read_line)
+	read_line[fd] = read_fd(fd, read_line[fd]);
+	if (!read_line[fd])
 		return (NULL);
-	return_line = return_line_f(read_line);
-	read_line = save_line_f(read_line);
+	return_line = return_line_f(read_line[fd]);
+	read_line[fd] = save_line_f(read_line[fd]);
 	return (return_line);
 }
-
-// int main(void)
-// {
-// 	int fd = open("file", O_RDONLY);
-// 	char *a= get_next_line(fd);
-// 	printf("%s", a);
-// 	int fd1 = open("hol", O_RDONLY);
-// 	char *b = get_next_line(fd1);
-// 	printf("%s", b);
-// 	int fd2 = open("ewe", O_RDONLY);
-// 	char *c= get_next_line(fd2);
-// 	printf("%s", c);
-// 	int fd3 = open("45", O_RDONLY);
-// 	char *d = get_next_line(fd3);
-// 	printf("%s", d);
-// 	// printf("%s", get_next_line(fd));
-// 	// printf("%s", get_next_line(fd));
-// 	// system("leaks a.out");
-// 	//10240
-
-// }
